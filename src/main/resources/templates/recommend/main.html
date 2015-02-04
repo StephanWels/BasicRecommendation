@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="head">
+<title layout:title-pattern="WEINFREUNDE - $CONTENT_TITLE">RECOMMENDER</title>
+<meta charset="utf-8" />
+<meta name="accept-language" th:content="${#locale.language}" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link th:href="@{/stylesheets/global.css}" rel="stylesheet" />
+<script th:src="@{/libs/js/require.js}" data-main="/js/require-setup"></script>
+<script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+<script th:src="@{/js/jquery.autocomplete.min.js}"></script>
+</head>
+
+<body>
+    <h2>Recommendations based on Association Rules</h2>
+
+    <div>
+        <form action="/recommend">
+            <input type="text" id="w-input-search" value="" name="term" />
+            <span>
+                <button type="submit" id="button-id">Search</button>
+            </span>
+        </form>
+    </div>
+    <div>
+        <div class="box">
+            <h2>Avaialable Items:</h2>
+            <div class="wrapper">
+                <ul>
+                    <li th:each="item : ${items}"><a
+                        th:href="@{/addItem (id=${item.id})}"
+                        th:text="${item.name}"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>Selected Items:</h2>
+            <div class="wrapper">
+                <ul>
+                    <li th:each="item : ${selectedItems}"><a
+                        th:href="@{/removeItem (id=${item.id})}"
+                        th:text="${item.name}"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>Recommendation:</h2>
+            <div class="wrapper">
+                <ul>
+                    <li th:each="item : ${recommendations}"><a
+                        th:href="@{/explain (id=${item.id})}"
+                        th:text="${item.name}"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
